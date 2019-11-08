@@ -1,0 +1,5 @@
+rootProject.name = 'exampleproject'
+
+include ':service'
+include ':integration'
+include ':configuration'

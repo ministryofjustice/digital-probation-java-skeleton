@@ -1,0 +1,4 @@
+/.gradle/
+/configuration/build/
+/service/build/
+project.properties
