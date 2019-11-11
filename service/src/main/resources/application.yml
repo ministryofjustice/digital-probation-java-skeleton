@@ -1,0 +1,24 @@
+#https://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html
+server:
+  port: 4000
+management:
+  endpoint:
+    health:
+      show-details: "NEVER"
+  health:
+    defaults:
+        enabled: false
+  endpoints:
+    web:
+      exposure:
+        include: health, info
+      base-path: /admin
+info:
+  app:
+    name: Example Service
+    version: 1.0
+
+logging:
+  level:
+    org.springframework: ERROR
+
