@@ -8,7 +8,7 @@ public class Helper {
     
     public static String getServiceAddress() {
         String url = System.getenv(BASE_URL) + ":" + System.getenv(PORT);
-        if (url.contentEquals(":")) {
+        if (url.contentEquals("null:null")) {
             url = LOCAL_ADDRESS;
         }
         return url;
