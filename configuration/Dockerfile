@@ -1,4 +1,4 @@
-FROM ubuntu:16.04
+FROM ubuntu:18.04
 
 # Install openjdk so can run liquibase
 RUN echo 'en_US.UTF-8 UTF-8' > /etc/locale.gen
@@ -15,7 +15,7 @@ RUN chmod +x /opt/setup.sh
 COPY database/migrate.sh /opt/liquibase
 
 # Copy database change scripts
-COPY database/changelogs/changelogs /opt/liquibase/changelogs
+COPY database/changelogs /opt/liquibase/changelogs
 
 RUN chmod +x /opt/liquibase/liquibase && ln -s /opt/liquibase/liquibase /usr/local/bin/ && chmod +x /opt/liquibase/migrate.sh
 
