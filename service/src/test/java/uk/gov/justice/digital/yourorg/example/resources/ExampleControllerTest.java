@@ -8,6 +8,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import uk.gov.justice.digital.yourorg.example.models.ExampleModel;
 import uk.gov.justice.digital.yourorg.example.services.ExampleService;
@@ -43,8 +44,7 @@ public class ExampleControllerTest {
                 
         ResponseEntity response = exampleController.index();
         
-        assertEquals(ResponseEntity.ok(), response.getStatusCode());
-        assertEquals(ResponseEntity.ok(), response.getHeaders());
+        assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals("Example Project", ((ExampleModel)response.getBody()).getExample());
     }
     
