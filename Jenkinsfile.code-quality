@@ -1,10 +1,19 @@
 pipeline {
-    agent any
-    stages {
-        stage('Stage 1') {
-            steps {
-                echo 'Hello world!'
-            }
-        }
+  agent {
+    kubernetes {
+      yamlFile 'CodeQualityAgent.yaml'
     }
+  }
+  stages {
+    stage('Sonar scanner') {
+      steps {
+        sh 'set'
+        container('sonar-scanner') {
+          withCredentials([string(credentialsId: 'hmpps-pcs-tooling-sonarqube-user-token', variable: 'SONAR_TOKEN')]) {
+            sh '/usr/bin/entrypoint.sh'
+          }
+        }
+      }
+    }
+  }
 }
