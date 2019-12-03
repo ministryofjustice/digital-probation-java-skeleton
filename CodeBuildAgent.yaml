@@ -1,0 +1,12 @@
+metadata:
+  labels:
+    agent-type: CodeBuild
+spec:
+  containers:
+    - name: jnlp
+      env:
+        - name: CONTAINER_ENV_VAR
+          value: jnlp
+      securityContext:
+        runAsUser: 1000
+
