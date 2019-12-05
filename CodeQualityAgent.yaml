@@ -28,6 +28,9 @@ spec:
 
     - name: gradle-container
       image: 'gradle:jdk11'
+      command:
+        - cat
+      tty: true
       securityContext:
         runAsUser: 1000
 
