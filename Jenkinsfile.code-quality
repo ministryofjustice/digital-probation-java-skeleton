@@ -7,8 +7,8 @@ pipeline {
   stages {
     stage('Unit Test') {
       steps {
-        container('gradle') {
-            sh 'gradle compileJava'
+        container('gradle-container') {
+            gradle test
         }
       }
     }

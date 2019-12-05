@@ -26,7 +26,7 @@ spec:
               name: jenkins-config
               key: sonarqube-url
 
-    - name: gradle
+    - name: gradle-container
       image: 'gradle:jdk11'
       securityContext:
         runAsUser: 1000
