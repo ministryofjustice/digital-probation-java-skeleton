@@ -17,4 +17,16 @@ dependencies {
     testCompile("io.rest-assured:rest-assured:4.1.2")
     testCompile("junit:junit:4.12")
 }
+
+task test(overwrite: true, type: Test) {
+    doLast() {
+        println "Overwrite test task in integration project"
+    }
+}
+
+test.onlyIf { project.hasProperty('runTests') && project.property('runTests') == 'true'}
+
+task integrationTest(dependsOn: test) {
+    println "Running tests in integration project"
+}
     
