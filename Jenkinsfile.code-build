@@ -8,7 +8,7 @@ pipeline {
     stage('Unit Test') {
       steps {
         container('gradle-container') {
-            sh "gradle test -PrunTests=true"
+            sh "gradle test"
         }
       }
     }
