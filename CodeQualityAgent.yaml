@@ -25,12 +25,3 @@ spec:
             configMapKeyRef:
               name: jenkins-config
               key: sonarqube-url
-
-    - name: gradle-container
-      image: 'gradle:jdk11'
-      command:
-        - cat
-      tty: true
-      securityContext:
-        runAsUser: 1000
-
