@@ -1,0 +1,16 @@
+pipeline {
+  agent {
+    kubernetes {
+      yamlFile 'CodeBuildAgent.yaml'
+    }
+  }
+  stages {
+    stage('Unit Test') {
+      steps {
+        container('gradle-container') {
+            sh "gradle test"
+        }
+      }
+    }
+  }
+}

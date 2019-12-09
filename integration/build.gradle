@@ -29,4 +29,3 @@ test.onlyIf { project.hasProperty('runTests') && project.property('runTests') ==
 task integrationTest(dependsOn: test) {
     println "Running tests in integration project"
 }
-    
