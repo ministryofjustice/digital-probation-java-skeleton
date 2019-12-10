@@ -8,6 +8,7 @@ buildscript {
 }
 
 apply plugin: 'java'
+apply plugin: 'jacoco'
 apply plugin: 'eclipse'
 apply plugin: 'idea'
 apply plugin: 'org.springframework.boot'
@@ -30,5 +31,40 @@ dependencies {
     compile("org.springframework.boot:spring-boot-starter-actuator")
     compile("io.springfox:springfox-swagger2:2.9.2")
     testCompile("org.springframework.boot:spring-boot-starter-test")
+}
+
+jacoco {
+    toolVersion = '0.8.5'
+}
+
+jacocoTestReport {
+    reports {
+        html.enabled = true
+        xml.enabled = true
+        csv.enabled = false
+        html.destination file("${buildDir}/jacocoHtml")
+    }
+}
+
+jacocoTestCoverageVerification {
+    violationRules {
+        rule {
+            limit {
+                minimum = 0.75
+            }
+        }
+
+        rule {
+            enabled = false
+            element = 'CLASS'
+            includes = ['uk.gov.justice.yourorg.example.*']
+
+            limit {
+                counter = 'LINE'
+                value = 'TOTALCOUNT'
+                minimum = 0.75
+            }
+        }
+    }
 }
 

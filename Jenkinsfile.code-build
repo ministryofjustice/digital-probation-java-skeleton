@@ -8,7 +8,26 @@ pipeline {
     stage('Unit Test') {
       steps {
         container('gradle-container') {
-            sh "gradle test"
+            sh "gradle clean test"
+        }
+      }
+    }
+    stage('Test Coverage') {
+      steps {
+        container('gradle-container') {
+            sh "gradle jacocoTestReport"
+        }
+      }
+    }
+    stage('Sonar scanner') {
+      steps {
+        sh 'set'
+        container('sonar-scanner') {
+          withCredentials([string(credentialsId: 'hmpps-pcs-tooling-sonarqube-user-token', variable: 'SONAR_TOKEN')]) {
+            withEnv(["SONAR_PROJECT_KEY=digital-probation-java-skeleton:${env.GIT_BRANCH}"]) {
+              sh './sonar-entrypoint.sh'
+            }
+          }
         }
       }
     }
