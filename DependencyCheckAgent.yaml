@@ -1,0 +1,46 @@
+metadata:
+  labels:
+    agent-type: DependencyCheck
+spec:
+  containers:
+    - name: jnlp
+      env:
+        - name: CONTAINER_ENV_VAR
+          value: jnlp
+      securityContext:
+        runAsUser: 1000
+
+    - name: dependency-check
+      image: 'owasp/dependency-check:5.2.0'
+      command:
+        - cat
+      tty: true
+      securityContext:
+        runAsUser: 1000
+      env:
+        - name: CONTAINER_ENV_VAR
+          value: dependency-check
+      volumeMounts:
+        - name: owasp-dependency-check-data
+          mountPath: /usr/share/dependency-check/data
+
+    - name: sonar-scanner
+      image: 'sonarsource/sonar-scanner-cli:4.2'
+      command:
+        - cat
+      tty: true
+      securityContext:
+        runAsUser: 1000
+      env:
+        - name: CONTAINER_ENV_VAR
+          value: sonar-scanner
+        - name: SONAR_HOST_URL
+          valueFrom:
+            configMapKeyRef:
+              name: jenkins-config
+              key: sonarqube-url
+
+  volumes:
+    - name: owasp-dependency-check-data
+      persistentVolumeClaim:
+        claimName: jenkins-shared-persistent-data

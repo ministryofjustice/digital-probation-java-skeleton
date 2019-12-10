@@ -1,0 +1,28 @@
+pipeline {
+  agent {
+    kubernetes {
+      yamlFile 'DependencyCheckAgent.yaml'
+    }
+  }
+  stages {
+    stage('OWASP Dependency check') {
+      steps {
+        container('dependency-check') {
+          sh './dependency-check.sh'
+        }
+      }
+    }
+    stage('Sonar scanner') {
+      steps {
+        sh 'set'
+        container('sonar-scanner') {
+          withCredentials([string(credentialsId: 'hmpps-pcs-tooling-sonarqube-user-token', variable: 'SONAR_TOKEN')]) {
+            withEnv(["SONAR_PROJECT_KEY=digital-probation-java-skeleton:${env.GIT_BRANCH}"]) {
+              sh './sonar-entrypoint.sh'
+            }
+          }
+        }
+      }
+    }
+  }
+}
