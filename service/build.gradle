@@ -49,20 +49,12 @@ jacocoTestReport {
 jacocoTestCoverageVerification {
     violationRules {
         rule {
-            limit {
-                minimum = 0.6
-            }
-        }
-
-        rule {
-            enabled = false
-            element = 'CLASS'
-            includes = ['uk.gov.justice.yourorg.example.*']
+            excludes = [
+                    'uk/gov/justice/yourorg/example/Application.class'
+            ]
 
             limit {
-                counter = 'LINE'
-                value = 'TOTALCOUNT'
-                minimum = 0.75
+                minimum = 0.9
             }
         }
     }
