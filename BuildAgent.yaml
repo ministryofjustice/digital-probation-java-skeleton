@@ -10,7 +10,7 @@ spec:
       securityContext:
         runAsUser: 1000
 
-    - name: gradle-container
+    - name: gradle
       image: 'gradle:jdk11'
       command:
         - cat
