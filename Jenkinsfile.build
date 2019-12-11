@@ -7,14 +7,14 @@ pipeline {
   stages {
     stage('Unit Test') {
       steps {
-        container('Unit Test') {
+        container('gradle') {
           sh "gradle clean test"
         }
       }
     }
     stage('Coverage') {
       steps {
-        container('gradle-container') {
+        container('gradle') {
           sh "gradle jacocoTestReport jacocoTestCoverageVerification"
         }
       }
