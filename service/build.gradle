@@ -44,12 +44,6 @@ jacocoTestReport {
         csv.enabled = false
         html.destination file("${buildDir}/jacocoHtml")
     }
-    // Simple example of exclusions
-    afterEvaluate {
-        classDirectories.setFrom(files(classDirectories.files.collect {
-            fileTree(dir: it, exclude: 'uk/gov/justice/digital/yourorg/example/Application.class')
-        }))
-    }
 }
 
 jacocoTestCoverageVerification {
