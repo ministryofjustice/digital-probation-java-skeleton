@@ -44,15 +44,18 @@ jacocoTestReport {
         csv.enabled = false
         html.destination file("${buildDir}/jacocoHtml")
     }
+
+    afterEvaluate {
+        classDirectories = files(classDirectories.files.collect {
+            fileTree(dir: service,
+                    exclude: ['src/main/java/uk/gov/justice/yourorg/example/Application**'])
+        })
+    }
 }
 
 jacocoTestCoverageVerification {
     violationRules {
         rule {
-            excludes = [
-                    'uk/gov/justice/yourorg/example/Application.class'
-            ]
-
             limit {
                 minimum = 0.8
             }
