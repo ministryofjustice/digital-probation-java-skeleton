@@ -10,6 +10,14 @@ spec:
       securityContext:
         runAsUser: 1000
 
+    - name: gradle
+      image: 'gradle:jdk11'
+      command:
+        - cat
+      tty: true
+      securityContext:
+        runAsUser: 1000
+
     - name: dependency-check
       image: 'owasp/dependency-check:5.2.0'
       command:

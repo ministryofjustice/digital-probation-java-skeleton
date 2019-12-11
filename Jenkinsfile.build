@@ -5,6 +5,20 @@ pipeline {
     }
   }
   stages {
+    stage('Unit Test') {
+      steps {
+        container('gradle') {
+          sh "gradle clean test"
+        }
+      }
+    }
+    stage('Coverage') {
+      steps {
+        container('gradle') {
+          sh "gradle jacocoTestReport jacocoTestCoverageVerification"
+        }
+      }
+    }
     stage('OWASP Dependency check') {
       steps {
         container('dependency-check') {
