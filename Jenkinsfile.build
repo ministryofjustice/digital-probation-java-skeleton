@@ -40,7 +40,8 @@ pipeline {
   }
   post {
     always {
-      echo 'Verify that the dependency check reports have been deleted'
+      echo 'Verify that the dependency check reports have been deleted by counting files in the ./dependency-check-report directory before and after deletion'
+      echo 'An eyeball check of this build log should show that the directory no longer exists, even if the agent somehow remains alive after the job has finished'
       sh '''
         ls -l ./dependency-check-report/ | wc -l
         rm -rf ./dependency-check-report/
