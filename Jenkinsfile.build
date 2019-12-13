@@ -38,4 +38,14 @@ pipeline {
       }
     }
   }
+  post {
+    always {
+      echo 'Verify that the dependency check reports have been deleted'
+      sh '''
+        ls -l ./dependency-check-report/ | wc -l
+        rm -rf ./dependency-check-report/
+        ls -l ./dependency-check-report/ | wc -l
+      '''
+    }
+  }
 }
