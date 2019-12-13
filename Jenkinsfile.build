@@ -22,7 +22,7 @@ pipeline {
     stage('OWASP Dependency check') {
       steps {
         container('dependency-check') {
-          sh './dependency-check.sh'
+          sh './dependency-check.sh > /dev/null'
         }
       }
     }
