@@ -19,7 +19,7 @@ spec:
         runAsUser: 1000
 
     - name: dependency-check
-      image: 'owasp/dependency-check:5.2.0'
+      image: 'owasp/dependency-check:5.2.0' # Leave this at v5.2.0
       command:
         - cat
       tty: true
