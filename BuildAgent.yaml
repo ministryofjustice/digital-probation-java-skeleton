@@ -48,7 +48,21 @@ spec:
               name: jenkins-config
               key: sonarqube-url
 
+    - name: docker-in-docker
+      image: 'mojdigitalstudio/mojdigitalstudio/hmpps-docker-cli:latest'
+      command:
+        - cat
+      tty: true
+      securityContext:
+        runAsUser: 1000
+      volumeMounts:
+        - name: dockersock
+          mountPath: "/var/run/docker.sock"
+
   volumes:
     - name: owasp-dependency-check-data
       persistentVolumeClaim:
         claimName: jenkins-shared-persistent-data
+    - name: dockersock
+      hostPath:
+        path: /var/run/docker.sock

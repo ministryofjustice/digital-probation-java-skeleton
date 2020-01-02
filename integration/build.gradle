@@ -14,8 +14,8 @@ sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
 dependencies {
-    testCompile("io.rest-assured:rest-assured:4.1.2")
-    testCompile("junit:junit:4.12")
+    testImplementation("io.rest-assured:rest-assured:4.1.2")
+    testImplementation("junit:junit:4.12")
 }
 
 task test(overwrite: true, type: Test) {

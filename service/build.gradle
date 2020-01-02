@@ -27,10 +27,10 @@ sourceCompatibility = 11
 targetCompatibility = 11
 
 dependencies {
-    compile("org.springframework.boot:spring-boot-starter-web")
-    compile("org.springframework.boot:spring-boot-starter-actuator")
-    compile("io.springfox:springfox-swagger2:2.9.2")
-    testCompile("org.springframework.boot:spring-boot-starter-test")
+    implementation("org.springframework.boot:spring-boot-starter-web")
+    implementation("org.springframework.boot:spring-boot-starter-actuator")
+    implementation("io.springfox:springfox-swagger2:2.9.2")
+    testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
 
 jacoco {
