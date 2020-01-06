@@ -48,7 +48,7 @@ spec:
               name: jenkins-config
               key: sonarqube-url
 
-    - name: docker-in-docker
+    - name: hmpps-docker-cli
       image: 'mojdigitalstudio/hmpps-docker-cli:latest'
       command:
         - cat
