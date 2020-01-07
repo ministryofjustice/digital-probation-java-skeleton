@@ -2,4 +2,4 @@ library(
   identifier: 'digital-probation-pipeline'
 )
 
-simplePipeline(dockerFile: 'service/docker/Dockerfile', dockerImageTag: 'hmpps-probation/spring-boot-skeleton')
+simplePipeline()
