@@ -2,4 +2,4 @@ library(
   identifier: 'digital-probation-pipeline'
 )
 
-simplePipeline()
+simplePipelineWithEC2()
