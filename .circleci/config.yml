@@ -1,0 +1,40 @@
+version: 2.1
+executors:
+  builder:
+    docker:
+      - image: gradle:jdk11
+    working_directory: /home/gradle/project
+
+jobs:
+  build:
+    executor: builder
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - gradle-{{ checksum "build.gradle" }}
+            - gradle-
+      - run: ./gradlew cleanTest build
+      - save_cache:
+          paths:
+            - ~/.gradle
+          key: gradle-{{ checksum "build.gradle" }}
+      - store_test_results:
+          path: build/reports
+      - store_artifacts:
+          path: build/reports
+      - persist_to_workspace:
+          root: .
+          paths:
+            - build/libs
+            - build.gradle
+            - app_version.txt
+
+workflows:
+  version: 2
+  build-test-and-deploy:
+    jobs:
+      - build:
+          filters:
+            tags:
+              ignore: /.*/
