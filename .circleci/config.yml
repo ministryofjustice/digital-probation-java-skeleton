@@ -31,12 +31,14 @@ executors:
   builder:
     docker:
       - image: gradle:jdk11
+    working_directory: ~/app
   sonar-scanner:
     docker:
       - image: sonarsource/sonar-scanner-cli:4.2
         environment:
           SONAR_HOST_URL: https://pcs-sonarqube.apps.live-1.cloud-platform.service.justice.gov.uk/
           SONAR_PROJECT_KEY: digital-probation-java-skeleton:foo
+    working_directory: ~/app
 
 orbs:
   kubernetes: circleci/kubernetes@0.3.0
@@ -47,7 +49,7 @@ jobs:
     executor: setup-tooling
     steps:
       - setup-tooling
-  build:
+  build_and_test:
     executor: builder
     steps:
       - checkout
@@ -55,27 +57,28 @@ jobs:
           keys:
             - gradle-{{ checksum "build.gradle" }}
             - gradle-
-      - run: ./gradlew cleanTest build
+      - run: gradle clean build
       - save_cache:
           paths:
             - ~/.gradle
           key: gradle-{{ checksum "build.gradle" }}
       - store_test_results:
-          path: build/reports
+          path: service/build/reports
       - store_artifacts:
-          path: build/reports
+          path: service/build/reports
+      - run: gradle jacocoTestReport jacocoTestCoverageVerification
       - persist_to_workspace:
           root: .
           paths:
-            - build/libs
-            - build.gradle
-            - app_version.txt
+            - service/build/reports
   sonar-scan:
     executor: sonar-scanner
     steps:
       - checkout
+      - attach_workspace:
+          at: ~/app
       - run:
-          name: Build container and publish to docker hub
+          name: Run sonar scan
           command: |
             set -euo pipefail
             declare -a args
@@ -100,5 +103,7 @@ workflows:
   version: 2
   code-quality:
     jobs:
-      - build
-      - sonar-scan
+      - build_and_test
+      - sonar-scan:
+          requires:
+            - build_and_test
