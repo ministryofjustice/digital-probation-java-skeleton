@@ -61,6 +61,6 @@ jacocoTestCoverageVerification {
 dependencyCheck {
     autoUpdate=true
     cveValidForHours=4
-    format='JSON'
+    format='ALL'
 }
 
