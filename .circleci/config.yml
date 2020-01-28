@@ -51,6 +51,8 @@ jobs:
     steps:
       - setup-tooling
 
+
+
   build_and_test:
     executor: builder
     steps:
@@ -107,6 +109,8 @@ workflows:
     jobs:
       - build_and_test
       - owasp/gradle_owasp_dependency_check
+        executor: java_11
+        persist_to_workspace: true
       - sonar-scan:
           requires:
             - build_and_test
