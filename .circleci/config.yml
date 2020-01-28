@@ -109,7 +109,6 @@ workflows:
     jobs:
       - build_and_test
       - owasp/gradle_owasp_dependency_check:
-          context: global
           persist_to_workspace: true
       - sonar-scan:
           requires:
