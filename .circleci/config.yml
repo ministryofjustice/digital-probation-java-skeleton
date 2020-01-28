@@ -43,12 +43,14 @@ executors:
 orbs:
   kubernetes: circleci/kubernetes@0.3.0
   helm: circleci/helm@0.1.2
+  owasp: entur/owasp@0.0.10
 
 jobs:
   setup-tooling:
     executor: setup-tooling
     steps:
       - setup-tooling
+
   build_and_test:
     executor: builder
     steps:
@@ -104,6 +106,7 @@ workflows:
   code-quality:
     jobs:
       - build_and_test
+      - owasp/gradle_owasp_dependency_check
       - sonar-scan:
           requires:
             - build_and_test
