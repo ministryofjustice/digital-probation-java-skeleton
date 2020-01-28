@@ -28,6 +28,10 @@ executors:
   setup-tooling:
     docker:
       - image: circleci/python:3
+  deployer:
+    docker:
+      - image: circleci/python:3
+    working_directory: ~/app
   builder:
     docker:
       - image: gradle:jdk11
@@ -58,6 +62,17 @@ jobs:
             - gradle-{{ checksum "build.gradle" }}
             - gradle-
       - run: gradle clean build
+      - run:
+          name: Record the Application Version
+          command: |
+            APP_VERSION="0.1.0"
+
+            # make up a good version name
+            TAG=${APP_VERSION}.${CIRCLE_BRANCH}
+            if [[ "${CIRCLE_BRANCH}" == "master" ]]; then
+              TAG=${APP_VERSION}
+            fi
+            echo $TAG > ./app_version.txt
       - save_cache:
           paths:
             - ~/.gradle
@@ -70,7 +85,42 @@ jobs:
       - persist_to_workspace:
           root: .
           paths:
+            - service/build/libs
             - service/build/reports
+            - build.gradle
+            - app_version.txt
+
+  build_docker:
+    executor: deployer
+    steps:
+      - checkout
+      - attach_workspace:
+          at: ~/app
+      - setup_remote_docker:
+          docker_layer_caching: true
+      - run:
+          name: Build container and publish to docker hub
+          command: |
+            APP_VERSION="0.1.0"
+            docker build --rm=false . \
+              --build-arg BUILD_NUMBER=$APP_VERSION \
+              --build-arg GIT_REF=$CIRCLE_SHA1 \
+              -f service/docker/Dockerfile \
+              --tag "mojdigitalstudio/digital-probation-java-skeleton:$APP_VERSION" \
+              --label "maintainer=pcs-team@digital.justice.gov.uk" \
+              --label "app.version=$APP_VERSION" \
+              --label "build.version=$APP_VERSION" \
+              --label "build.number=$CIRCLE_BUILD_NUM" \
+              --label "build.url=$CIRCLE_BUILD_URL" \
+              --label "build.gitref=$CIRCLE_SHA1"
+            if [[ "${CIRCLE_BRANCH}" == "master" ]]; then
+              # publish to docker hub as the tag
+             docker login -u $DOCKER_USER -p $DOCKER_PASS
+             docker tag mojdigitalstudio/digital-probation-java-skeleton:$APP_VERSION mojdigitalstudio/digital-probation-java-skeleton:latest
+             docker push mojdigitalstudio/digital-probation-java-skeleton:$APP_VERSION
+             docker push mojdigitalstudio/digital-probation-java-skeleton:latest
+            fi
+
   sonar-scan:
     executor: sonar-scanner
     steps:
@@ -104,6 +154,10 @@ workflows:
   code-quality:
     jobs:
       - build_and_test
+      - build_docker:
+          requires:
+            - build_and_test
       - sonar-scan:
           requires:
             - build_and_test
+            - build_docker
