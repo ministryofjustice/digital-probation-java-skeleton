@@ -63,4 +63,3 @@ dependencyCheck {
     cveValidForHours=4
     format='ALL'
 }
-

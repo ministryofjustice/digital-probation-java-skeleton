@@ -55,8 +55,6 @@ jobs:
     steps:
       - setup-tooling
 
-
-
   build_and_test:
     executor: builder
     steps:
@@ -167,3 +165,4 @@ workflows:
           requires:
             - build_and_test
             - build_docker
+            - owasp/gradle_owasp_dependency_check
