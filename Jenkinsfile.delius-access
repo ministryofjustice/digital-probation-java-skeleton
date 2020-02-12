@@ -1,0 +1,29 @@
+pipeline {
+    agent {
+        kubernetes {
+            yamlFile 'BuildAgentDeliusAccess.yaml'
+        }
+    }
+
+    options {
+        // Fails the job if it takes longer than this
+        timeout(time: 60, unit: 'MINUTES')
+    }
+
+    stages {
+        stage('Setup') {
+            steps {
+                container('aws') {
+                    sh 'pip install elasticsearch requests-aws4auth'
+                }
+            }
+        }
+        stage('Delius ES access') {
+            steps {
+                container('aws') {
+                    sh 'python es_test.py'
+                }
+            }
+        }
+    }
+}

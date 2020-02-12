@@ -1,0 +1,22 @@
+metadata:
+  labels:
+    agent-type: DeliusAccess
+  annotations:
+    iam.amazonaws.com/role: arn:aws:iam::754256621582:role/cloud-platform-probation-core-services-tooling-role
+
+spec:
+    containers:
+    - name: jnlp
+      env:
+        - name: CONTAINER_ENV_VAR
+          value: jnlp
+      securityContext:
+        runAsUser: 1000
+
+    - name: aws
+      image: 'woahbase/alpine-awscli:x86_64'
+      command:
+        - cat
+      tty: true
+      securityContext:
+        runAsUser: 1000
