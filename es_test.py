@@ -7,9 +7,10 @@ region = 'eu-west-2'
 
 sts_client = boto3.client('sts')
 assumed_role_object=sts_client.assume_role(
-    RoleArn="arn:aws:iam::434401102446:role/ES_User",
+    RoleArn="arn:aws:iam::434401102446:role/CP_Test",
     RoleSessionName="AssumeRoleSession1"
 )
+# Used assumed role credentials to sign requests to ElasticSearch in Delius
 credentials = assumed_role_object['Credentials']
 awsauth = AWS4Auth(credentials['AccessKeyId'], credentials['SecretAccessKey'], region, 'es', session_token=credentials['SessionToken'])
 
@@ -27,6 +28,6 @@ document = {
     "year": "2019"
 }
 
-es.index(index="movies", doc_type="_doc", id="5", body=document)
+# es.index(index="movies", doc_type="_doc", id="5", body=document)
 
-print(es.get(index="movies", doc_type="_doc", id="5"))
+# print(es.get(index="movies", doc_type="_doc", id="5"))

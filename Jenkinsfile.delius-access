@@ -25,5 +25,12 @@ pipeline {
                 }
             }
         }
+        stage('Delius Secret access') {
+            steps {
+                container('aws') {
+                    sh 'python secret_test.py'
+                }
+            }
+        }
     }
 }
