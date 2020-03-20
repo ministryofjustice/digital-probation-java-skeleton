@@ -1,4 +1,4 @@
-FROM openjdk:13-alpine
+FROM openjdk:15-ea-13-jdk
 
 RUN mkdir -p /usr/src/app
 ADD service/build/libs/example-api-0.1.0.jar /usr/src/app/app.jar
