@@ -35,6 +35,8 @@ executors:
   builder:
     docker:
       - image: circleci/openjdk:11-jdk-browsers
+        environment:
+          SNYK_TOKEN: 31a7f2be-05a2-49d5-b5d8-47382a641235
     working_directory: ~/app
   sonar-scanner:
     docker:
