@@ -48,6 +48,7 @@ orbs:
   kubernetes: circleci/kubernetes@0.3.0
   helm: circleci/helm@0.1.2
   owasp: entur/owasp@0.0.10
+  snyk: snyk/snyk@0.0.9
 
 jobs:
   setup-tooling:
@@ -64,6 +65,7 @@ jobs:
             - gradle-{{ checksum "build.gradle" }}
             - gradle-
       - run: gradle clean build
+      - snyk/scan
       - run:
           name: Record the Application Version
           command: |

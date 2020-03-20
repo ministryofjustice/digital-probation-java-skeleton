@@ -1,3 +1,24 @@
+import java.time.Instant
+import java.time.LocalDate
+
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '2.1.9.RELEASE'
+    id 'io.spring.dependency-management' version '1.0.8.RELEASE'
+    id 'com.github.ben-manes.versions' version '0.26.0'
+}
+
+apply plugin: 'idea'
+
+project.sourceCompatibility = 11
+project.targetCompatibility = 11
+
+group = 'uk.gov.justice.probation'
+
+def today = Instant.now()
+def todaysDate = LocalDate.now().format('yyyy-MM-dd')
+version = System.getenv('CI') ? "${todaysDate}.${System.getenv('CIRCLE_BUILD_NUM')}" : todaysDate
+
 allprojects {
     repositories {
         jcenter()
@@ -5,5 +26,36 @@ allprojects {
 }
 
 subprojects {
+
+}
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    implementation 'org.junit.jupiter:junit-jupiter-api:5.5.1'
+    implementation 'io.jsonwebtoken:jjwt:0.9.1'
+    compileOnly 'org.projectlombok:lombok'
+    runtimeOnly 'org.springframework.boot:spring-boot-devtools'
+    annotationProcessor 'org.projectlombok:lombok'
+    compile group: 'com.google.guava', name: 'guava', version: '27.1-jre'
+    implementation group: 'javax.xml.bind', name: 'jaxb-api', version: '2.3.1'
+    implementation group: 'com.sun.xml.bind', name: 'jaxb-impl', version: '2.3.0.1'
+    compile 'org.glassfish.jaxb:jaxb-runtime:2.3.0'
+
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'net.javacrumbs.json-unit:json-unit-assertj:2.9.0'
+    testCompile 'io.rest-assured:rest-assured:3.0.3'
+    testCompile "com.github.tomakehurst:wiremock:2.13.0"
+    testCompile group: 'commons-io', name: 'commons-io', version: '2.6'
+
+    implementation ('com.fasterxml.jackson.core:jackson-databind:2.9.10.3') {
+        because 'previous versions have a known vulnerability'
+    }
 
 }
