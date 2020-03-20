@@ -68,7 +68,7 @@ jobs:
       - snyk/scan:
           fail-on-issues: false
           monitor-on-build: true
-          organisation: 'Digital Probation Services'
+          organization: 'digital-probation-services'
       - run:
           name: Record the Application Version
           command: |
@@ -123,7 +123,7 @@ jobs:
           fail-on-issues: false
           monitor-on-build: true
           project: '${CIRCLE_PROJECT_REPONAME}/${CIRCLE_BRANCH}-container'
-          organisation: 'Digital Probation Services'
+          organization: 'digital-probation-services'
           target-file: Dockerfile
       - run:
           name: Install trivy
