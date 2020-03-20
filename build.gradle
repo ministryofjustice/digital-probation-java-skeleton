@@ -58,8 +58,4 @@ dependencies {
     testImplementation "com.github.tomakehurst:wiremock:2.13.0"
     testImplementation group: 'commons-io', name: 'commons-io', version: '2.6'
 
-    implementation ('com.fasterxml.jackson.core:jackson-databind:2.9.10.3') {
-        because 'previous versions have a known vulnerability'
-    }
-
 }
