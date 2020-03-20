@@ -68,6 +68,7 @@ jobs:
       - snyk/scan:
           fail-on-issues: false
           monitor-on-build: true
+          project: '${CIRCLE_PROJECT_REPONAME}/${CIRCLE_BRANCH}-app'
           organization: 'digital-probation-services'
       - run:
           name: Record the Application Version
@@ -124,7 +125,7 @@ jobs:
           monitor-on-build: true
           project: '${CIRCLE_PROJECT_REPONAME}/${CIRCLE_BRANCH}-container'
           organization: 'digital-probation-services'
-          target-file: Dockerfile
+          target-file: 'service/docker/Dockerfile'
       - run:
           name: Install trivy
           command: |
