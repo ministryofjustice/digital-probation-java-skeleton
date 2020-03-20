@@ -67,7 +67,8 @@ jobs:
             - gradle-{{ checksum "build.gradle" }}
             - gradle-
       - run: gradle clean build
-      - snyk/scan
+      - snyk/scan:
+          fail-on-issues: false
       - run:
           name: Record the Application Version
           command: |
