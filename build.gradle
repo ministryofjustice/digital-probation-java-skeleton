@@ -3,6 +3,8 @@ import java.time.LocalDate
 
 plugins {
     id 'java'
+    id 'org.springframework.boot' version '2.1.9.RELEASE'
+    id 'io.spring.dependency-management' version '1.0.8.RELEASE'
     id 'com.github.ben-manes.versions' version '0.26.0'
 }
 
@@ -27,6 +29,10 @@ subprojects {
 
 }
 
+springBoot {
+    mainClassName = 'uk.gov.justice.digital.yourorg.example.Application'
+}
+
 configurations {
     compileOnly {
         extendsFrom annotationProcessor
@@ -41,16 +47,16 @@ dependencies {
     compileOnly 'org.projectlombok:lombok'
     runtimeOnly 'org.springframework.boot:spring-boot-devtools'
     annotationProcessor 'org.projectlombok:lombok'
-    compile group: 'com.google.guava', name: 'guava', version: '27.1-jre'
+    implementation group: 'com.google.guava', name: 'guava', version: '27.1-jre'
     implementation group: 'javax.xml.bind', name: 'jaxb-api', version: '2.3.1'
     implementation group: 'com.sun.xml.bind', name: 'jaxb-impl', version: '2.3.0.1'
-    compile 'org.glassfish.jaxb:jaxb-runtime:2.3.0'
+    implementation 'org.glassfish.jaxb:jaxb-runtime:2.3.0'
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'net.javacrumbs.json-unit:json-unit-assertj:2.9.0'
-    testCompile 'io.rest-assured:rest-assured:3.0.3'
-    testCompile "com.github.tomakehurst:wiremock:2.13.0"
-    testCompile group: 'commons-io', name: 'commons-io', version: '2.6'
+    testImplementation 'io.rest-assured:rest-assured:3.0.3'
+    testImplementation "com.github.tomakehurst:wiremock:2.13.0"
+    testImplementation group: 'commons-io', name: 'commons-io', version: '2.6'
 
     implementation ('com.fasterxml.jackson.core:jackson-databind:2.9.10.3') {
         because 'previous versions have a known vulnerability'
