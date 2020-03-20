@@ -3,7 +3,7 @@ import java.time.LocalDate
 
 plugins {
     id 'java'
-    id 'org.springframework.boot' version '2.1.9.RELEASE'
+    id 'org.springframework.boot' version '2.2.2.RELEASE'
     id 'io.spring.dependency-management' version '1.0.8.RELEASE'
     id 'com.github.ben-manes.versions' version '0.26.0'
 }
@@ -55,7 +55,7 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'net.javacrumbs.json-unit:json-unit-assertj:2.9.0'
     testImplementation 'io.rest-assured:rest-assured:3.0.3'
-    testImplementation "com.github.tomakehurst:wiremock:2.13.0"
+    testImplementation "com.github.tomakehurst:wiremock:2.25.0"
     testImplementation group: 'commons-io', name: 'commons-io', version: '2.6'
 
 }
