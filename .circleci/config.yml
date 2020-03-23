@@ -68,6 +68,7 @@ jobs:
       - snyk/scan:
           fail-on-issues: false
           monitor-on-build: true
+          project: '${CIRCLE_PROJECT_REPONAME}/${CIRCLE_BRANCH}-app'
           organization: 'digital-probation-services'
       - run:
           name: Record the Application Version
@@ -120,10 +121,11 @@ jobs:
             docker tag mojdigitalstudio/digital-probation-java-skeleton:$APP_VERSION mojdigitalstudio/digital-probation-java-skeleton:latest
       - snyk/scan:
           docker-image-name: 'mojdigitalstudio/digital-probation-java-skeleton:latest'
+          target-file: 'service/docker/Dockerfile'
           fail-on-issues: false
           monitor-on-build: true
+          project: '${CIRCLE_PROJECT_REPONAME}/latest'
           organization: 'digital-probation-services'
-          target-file: 'service/docker/Dockerfile'
       - run:
           name: Install trivy
           command: |
